@@ -22,9 +22,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 const task = jsonResponse.data
                 renderTask(task.id, task.title, task.description, task.status);
             }
+            this.title.value = '';
+            this.description.value = '';
         });
-        this.title.value = '';
-        this.description.value = '';
     });
 });
 
@@ -73,7 +73,7 @@ function renderTask(taskId, title, description, status) {
         finishButton.innerText = 'Finish';
         headerRightDiv.appendChild(finishButton);
 
-        finishButton.addEventListener('click',function(e){
+        finishButton.addEventListener('click',function(){
             apiUpdateTask(taskId, title, description, 'closed').then(jsonResponse=>{
                 if(!jsonResponse.error){
                     const toDelete = section.querySelectorAll('.js-task-open-only');
@@ -90,7 +90,7 @@ function renderTask(taskId, title, description, status) {
     deleteButton.innerText = 'Delete';
     headerRightDiv.appendChild(deleteButton);
 
-    deleteButton.addEventListener('click',function(event){
+    deleteButton.addEventListener('click',function(){
         apiDeleteTask(taskId).then(jsonResponse=>{
             if(!jsonResponse.error) {
                 section.parentElement.removeChild(section);
@@ -147,8 +147,8 @@ function renderTask(taskId, title, description, status) {
                     const operation = jsonResponse.data;
                     renderOperation(list, operation.id, status, operation.description, operation.timeSpent);
                 }
+                input.value='';
             });
-            input.value='';
         });
     }
 }
@@ -194,7 +194,7 @@ function renderOperation(operationsList, operationId, status, operationDescripti
         button15m.innerText = '+15m';
         buttonDiv.appendChild(button15m);
 
-        button15m.addEventListener('click',function(e){
+        button15m.addEventListener('click',function(){
             apiUpdateOperation(operationId, operationDescription, timeSpent+15).then(jsonResponse=>{
                 if(!jsonResponse.error){
                     timeSpent=jsonResponse.data.timeSpent;
@@ -208,7 +208,7 @@ function renderOperation(operationsList, operationId, status, operationDescripti
         button1h.innerText = '+1h';
         buttonDiv.appendChild(button1h);
 
-        button1h.addEventListener('click',function(e){
+        button1h.addEventListener('click',function(){
             apiUpdateOperation(operationId, operationDescription, timeSpent+60).then(jsonResponse=>{
                 if(!jsonResponse.error){
                     timeSpent=jsonResponse.data.timeSpent;
@@ -222,7 +222,7 @@ function renderOperation(operationsList, operationId, status, operationDescripti
         buttonDelete.innerText = 'Delete';
         buttonDiv.appendChild(buttonDelete);
 
-        buttonDelete.addEventListener('click',function(e){
+        buttonDelete.addEventListener('click',function(){
             apiDeleteOperation(operationId).then(jsonResponse=>{
                 if(!jsonResponse.error){
                     li.parentElement.removeChild(li);
